@@ -1,0 +1,9 @@
+.jumbotron,
+.container {
+  border: solid #000;
+  border-width: 3px 0;
+}
+
+.jumbotron .container {
+  border: none;
+}
