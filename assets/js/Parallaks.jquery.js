@@ -44,8 +44,6 @@
       settings.doParallax = false;
     }
 
-    alert(settings.doParallax);
-
     // If we should do parallax effect
     if(settings.doParallax) {
 
