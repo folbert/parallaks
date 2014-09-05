@@ -1,0 +1,55 @@
+.parallaks-item {
+  overflow: hidden;
+  z-index: 1;
+  width: 100%;
+  position: relative;
+  height: 400px;
+}
+
+.parallaks-item img {
+  // Set rules to fill background
+  min-height: 100%;
+  min-width: 800px;
+  // Set up proportionate scaling
+  width: 100%;
+  height: auto;
+  // Set up positioning
+  position: absolute;
+  top: 0;
+  left: 0
+}
+
+.no-parallaks .parallaks-item {
+    overflow: visible;
+    height: auto;
+}
+
+.no-parallaks .parallaks-item img {
+  min-height: initial;
+  min-width: initial;
+  position: relative;
+}
+
+.parallaks-background-wrapper {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  z-index: 0;
+}
+
+.parallaks-background-wrapper img {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.parallaks-background-1 {
+  position: relative;
+  height: 200px;
+  background-position: center 0;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  height: auto;
+  overflow: hidden;
+}
