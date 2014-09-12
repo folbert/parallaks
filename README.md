@@ -2,6 +2,8 @@
 
 jQuery plugin for creating basic parallax effects.
 
+Demos at [http://folbert.com/code/parallaks/](http://folbert.com/code/parallaks/)
+
 ##How to use
 
 JavaScript: Include either `:assets/js/Parallaks.jquery.js` or `:Parallaks.jquery.min.js` in your page.
