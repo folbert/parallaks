@@ -28,19 +28,15 @@
    */
   $.fn.parallaks = function(options) {
 
-    //bodyPaddingTop = bodyPaddingTop*2;
-
     settings = $.extend({
        doParallax: true
     }, options);
-
-    var $firstObj = $(this).eq(0);
 
     originalObjects = this;
     nrOfObjects = originalObjects.length;
 
     // If request animation frame is not supported or window dont have pagYoffset or IE
-    if(scroll === false || typeof window.pageYOffset == 'undefined') {
+    if(scroll === false || typeof window.pageYOffset == 'undefined' || navigator.appName == 'Microsoft Internet Explorer') {
       settings.doParallax = false;
     }
 
@@ -77,18 +73,26 @@
    */
   function initParallaxObjects() {
 
-    var html = '';
+    var parallaksElments = [];
 
     // For every original object that we have...
     originalObjects.each(function(index) {
 
-      // ...create a new one which we will use for the parallax effect
-      html += '<div class="parallaks-background-wrapper" id="parallaks-' + index + '"><img src="' + $(this).attr('data-imgsrc') + '" /></div>';
+      var parallaksElement = document.createElement('DIV');
+      parallaksElement.setAttribute('class', 'parallaks-background-wrapper');
+      parallaksElement.setAttribute('id', 'parallaks-' + index);
+
+      var imgElement = document.createElement('IMG');
+      imgElement.setAttribute('src', $(this).attr('data-imgsrc'));
+
+      parallaksElement.appendChild(imgElement);
+
+      parallaksElments[index] = parallaksElement;
 
     });
 
     // Add the new HTML to the top of the <body>
-    $('body').prepend(html);
+    $('body').prepend(parallaksElments);
 
     originalObjects.each(function(index) {
 
@@ -121,11 +125,13 @@
    */
   function initUnCoolObjects() {
 
-    var html = '';
-
     originalObjects.each(function(index) {
 
-      $(this).append('<img src="' + $(this).attr('data-imgsrc') + '" class="parallaks-background-wrapper--img" />');
+      var imgElement = document.createElement('IMG');
+      imgElement.setAttribute('src', $(this).attr('data-imgsrc'));
+      imgElement.setAttribute('class', $(this).attr('data-imgsrc'));
+
+      $(this).append(imgElement);
 
       injectedImgObjects[index] = {el: $(this).find('img')[0] };
 
@@ -225,9 +231,11 @@
       /**
        * DEBUG
        */
+      /*
       injectedWrapperObjects[i].el.setAttribute('data-start', injectedWrapperObjects[i].start);
       injectedWrapperObjects[i].el.setAttribute('data-stop', injectedWrapperObjects[i].stop);
       injectedImgObjects[i].el.setAttribute('data-positionX', injectedImgObjects[i].positionX);
+      */
 
     }
 
@@ -238,16 +246,16 @@
    */
   function setUnCoolSize() {
 
-    // No need to resize if its only the hieght that has changed.
+    // No need to resize if its only the height that has changed.
     // This also avoid calculations when scrolling on mobile devices.
     if(window.innerWidth != windowWidth) {
 
-      imgSizeData = getImgSizeData(injectedImgObjects[i], false, windowHeight, windowWidth);
       windowHeight = parseInt(window.innerHeight);
       windowWidth = parseInt(window.innerWidth);
 
       for (var i =0; i<nrOfObjects; i++) {
 
+        var imgSizeData = getImgSizeData(injectedImgObjects[i], false, windowHeight, windowWidth);
         injectedImgObjects[i].el.style.width = imgSizeData.newImgWidth + 'px';
         injectedImgObjects[i].el.style.height = imgSizeData.newImgHeight + 'px';
         injectedImgObjects[i].el.style.left = parseInt(imgSizeData.positionX) + 'px';
